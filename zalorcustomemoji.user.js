@@ -304,7 +304,7 @@
 			input.type = "text";
 			input.id = "custom-text-reaction-input";
 			input.placeholder = "Nhập nội dung reaction...";
-			input.maxLength = 15; 
+			input.maxLength = 20; 
 			input.style.cssText = `
 				padding: 10px 12px;
 				padding-right: 40px;
@@ -367,7 +367,7 @@
 			emojiPicker.addEventListener("click", (e) => {
 				if (e.target.classList.contains("emoji-button")) {
 					input.value += e.target.textContent;
-					charCounter.textContent = `${input.value.length}/15`;
+					charCounter.textContent = `${input.value.length}/20`;
 					emojiPicker.style.display = "none";
 					input.focus();
 				}
@@ -375,10 +375,10 @@
 			
 			const charCounter = document.createElement("div");
 			charCounter.style.cssText = "position: absolute; right: 10px; bottom: -18px; font-size: 11px; color: #999;";
-			charCounter.textContent = "0/15";
+			charCounter.textContent = "0/20";
 			
 			input.addEventListener("input", () => {
-				charCounter.textContent = `${input.value.length}/15`;
+				charCounter.textContent = `${input.value.length}/20`;
 			});
 			
 			inputContainer.appendChild(input);
@@ -482,7 +482,7 @@
 					popup.style.display = "flex";
 					overlay.style.display = "block";
 					input.value = "";
-					charCounter.textContent = "0/15";
+					charCounter.textContent = "0/20";
 					input.focus();
 				},
 				hide: hidePopup,
