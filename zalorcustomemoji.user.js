@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Zalo Custom Reactions
-// @version      1.8.1
+// @version      1.8
 // @description  Zalo web custom reaction
 // @author       Anhwaivo
 // @maintainer   Kennex666 (UI/UX), Meohunter (TextBox), dacsang97 (Emoji Picker)
@@ -8,16 +8,16 @@
 // @match        https://chat.zalo.me/*
 // @grant        none
 // @run-at       document-idle
-// @downloadURL  https://github.com/anhwaivo/zalo-custom-reaction-userscript/raw/refs/heads/main/zalorcustomemoji.user.js
+// @downloadURL  https://github.com/docbohanh/zalo-custom-reaction-userscript/raw/refs/heads/main/zalorcustomemoji.user.js
 // ==/UserScript==
 
 (function() {
 	"use strict";
-	
+
 		const settings = {
 			isRecently: false
 		}
-	
+
 		const reactions = [
 			{
 				type: 100,
@@ -34,7 +34,7 @@
 				bgPos: "74% 62.5%",
 			},
 			{
-				type: 102,
+				type: 103,
 				icon: "🎨",
 				name: "send_custom",
 				class: "emoji-sizer emoji-outer",
@@ -43,7 +43,7 @@
 			// Thêm emoji: Copy dòng dưới, sửa icon để thêm reaction tuỳ ý (gồm text hoặc emoji),
 			// {type: "<thay icon vào>", icon: "<thay icon vào>", name: "<tên tuỳ ý>", class: "emoji-sizer emoji-outer", bgPos: "74% 62.5%"},
 		];
-	
+
 		const RecentlyReaction = {
 			add: function (reaction) {
 				const emojiCustom = {
@@ -62,7 +62,7 @@
 				settings.isRecently = true;
 				localStorage.setItem("recentlyCustomReaction", JSON.stringify(emojiCustom));
 			},
-	
+
 			get: function () {
 				const reaction = localStorage.getItem("recentlyCustomReaction");
 				if (reaction) {
@@ -70,7 +70,7 @@
 				}
 				return null;
 			},
-	
+
 			load: function () {
 				const reaction = this.get();
 				if (reaction) {
@@ -78,9 +78,9 @@
 					reactions.push(reaction);
 				}
 			}
-			
+
 		}
-	
+
 		// Đồng bộ id cho người dùng script (Emoji sẽ hiện được khi người dùng xài cùng emoji)
 		function simpleHash(str) {
 			let hash = 0;
@@ -90,19 +90,20 @@
 			}
 			return Math.abs(hash); // chỉ là số, không có chữ
 		}
-	
+
 		// Common emojis for the emoji picker
 		const emojiCategories = {
-			"Smileys": ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "🥲", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😮‍💨", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😱", "😨", "😰", "😥"],
-			"Gestures": ["👋", "🤚", "✋", "🖖", "👌", "🤌", "🤏", "✌️", "🤞", "🤟", "🤘", "🤙", "👈", "👉", "👆", "🖕", "👇", "👍", "👎", "✊", "👊", "🤛", "🤜", "👏", "🙌", "👐", "🤲", "🤝", "🙏"],
-			"People": ["👶", "👧", "🧒", "👦", "👩", "🧑", "👨", "👩‍🦱", "🧑‍🦱", "👨‍🦱", "👩‍🦰", "🧑‍🦰", "👨‍🦰", "👱‍♀️", "👱", "👱‍♂️", "👩‍🦳", "🧑‍🦳", "👨‍🦳", "👩‍🦲", "🧑‍🦲", "👨‍🦲", "🧔‍♀️", "🧔", "🧔‍♂️"],
+			"Smileys": ["😀", "👻", "😵‍💫", "😵", "🤢", "🤮", "😈", "💩", "🎃", "🤑", "🤖", "🥳", "😆", "🤧", "😂", "🤣", "🥱", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🥸", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😮‍💨", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😱", "😨", "😰", "😥"],
+			"Gestures": ["👋", "👏", "🙌", "🙏", "🤚", "✋", "🖖", "👐", "🤲", "🤝", "👌", "🤌", "🤏", "✌️", "🤞", "🤟", "🤘", "🤙", "👈", "👉", "👆", "🖕", "👇", "👍", "👎", "✊", "👊", "🤛", "🤜"],
+			"Flower": ["💐", "🌷", "🌹", "☘️", "🍀", "🌸", "🌻", "🌼", "🌺", "🪷", "🌱"],
+            "People": ["👶", "👧", "🧒", "👦", "👩", "🧑", "👨", "👩‍🦱", "🧑‍🦱", "👨‍🦱", "👩‍🦰", "🧑‍🦰", "👨‍🦰", "👱‍♀️", "👱", "👱‍♂️", "👩‍🦳", "🧑‍🦳", "👨‍🦳", "👩‍🦲", "🧑‍🦲", "👨‍🦲", "🧔‍♀️", "🧔", "🧔‍♂️"],
 			"Animals": ["🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐻‍❄️", "🐨", "🐯", "🦁", "🐮", "🐷", "🐽", "🐸", "🐵", "🙈", "🙉", "🙊", "🐒", "🐔", "🐧", "🐦", "🐤", "🐣", "🐥", "🦆", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐝", "🪱", "🐛", "🦋", "🐌", "🐞"],
 			"Food": ["🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🫐", "🍈", "🍒", "🍑", "🥭", "🍍", "🥥", "🥝", "🍅", "🍆", "🥑", "🥦", "🥬", "🥒", "🌶", "🫑", "🌽", "🥕", "🥔", "🍠", "🥐", "🥯", "🍞", "🥖", "🥨", "🧀", "🥚", "🍳", "🧈", "🥞", "🧇", "🥓", "🍔", "🍟", "🍕", "🌭", "🥪", "🌮", "🌯", "🫔", "🥙"],
 			"Activities": ["⚽️", "🏀", "🏈", "⚾️", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓", "🏸", "🏒", "🏑", "🥍", "🏏", "🪃", "🥅", "⛳️", "🪁", "🏹", "🎣", "🤿", "🥊", "🥋", "🎽", "🛹", "🛼", "🛷", "⛸", "🥌", "🎿"],
-			"Objects": ["⌚️", "📱", "💻", "⌨️", "🖥", "🖱", "🖨", "🕹", "🗜", "💾", "💿", "📀", "📼", "📷", "📸", "📹", "🎥", "📽", "🎞", "📞", "☎️", "📟", "📠", "📺", "📻", "🎙", "🎚", "🎛", "🧭", "⏱", "⏲", "⏰", "🕰"],
-			"Symbols": ["❤️", "🧡", "💛", "💚", "💙", "💜", "🖤", "🤍", "🤎", "💔", "❣️", "💕", "💞", "💓", "💗", "💖", "💘", "💝", "💟", "☮️", "✝️", "☪️", "🕉", "☸️", "✡️", "🔯", "🕎", "☯️", "☦️", "🛐", "⛎", "♈️", "♉️", "♊️", "♋️", "♌️", "♍️", "♎️", "♏️", "♐️", "♑️", "♒️", "♓️", "🆔", "⚛️"]
+			"Objects": ["⌚️", "📱", "💻", "⌨️", "🖥", "🖱", "🖨", "🕹", "🗜", "💾", "💿", "📀", "📼", "📷", "📸", "📹", "🎥", "📽", "🎞", "📞", "☎️", "📟", "📠", "📺", "📻", "🎙", "🎚", "🎛", "🧭", "⏱", "⏲", "⏰", "🕰"]
+
 		};
-	
+
 		const createEmojiPicker = () => {
 			const picker = document.createElement("div");
 			picker.id = "emoji-picker";
@@ -122,7 +123,7 @@
 				display: flex;
 				flex-direction: column;
 			`;
-	
+
 			// Create tabs for categories
 			const tabsContainer = document.createElement("div");
 			tabsContainer.style.cssText = `
@@ -138,13 +139,13 @@
 				min-height: 36px;
 				align-items: center;
 			`;
-			
+
 			// Hide scrollbar
 			tabsContainer.addEventListener('mousewheel', function(e) {
 				this.scrollLeft += e.deltaY;
 				e.preventDefault();
 			});
-			
+
 			// Add CSS to hide scrollbar
 			const style = document.createElement('style');
 			style.textContent = `
@@ -160,7 +161,7 @@
 				}
 			`;
 			document.head.appendChild(style);
-	
+
 			// Create emoji content container
 			const emojiContent = document.createElement("div");
 			emojiContent.style.cssText = `
@@ -171,28 +172,28 @@
 				padding-right: 4px;
 				max-height: 240px;
 			`;
-	
+
 			// Create tabs for each category
 			Object.keys(emojiCategories).forEach((category, idx) => {
 				const tab = document.createElement("button");
 				tab.className = "emoji-category-tab";
 				tab.dataset.category = category;
-				
+
 				// Use an icon or first emoji to represent each category
 				const categoryIcons = {
 					"Smileys": "😀",
 					"Gestures": "👍",
+                    "Flower": "💐",
 					"People": "👨",
 					"Animals": "🐱",
 					"Food": "🍔",
 					"Activities": "⚽️",
-					"Objects": "📱",
-					"Symbols": "❤️"
+					"Objects": "📱"
 				};
-				
+
 				tab.textContent = categoryIcons[category] || category.slice(0, 1);
 				tab.title = category;
-				
+
 				tab.style.cssText = `
 					background: ${idx === 0 ? '#e3f2fd' : 'transparent'};
 					border: none;
@@ -209,19 +210,19 @@
 					align-items: center;
 					justify-content: center;
 				`;
-				
+
 				tab.addEventListener("click", () => {
 					// Deselect all tabs
 					document.querySelectorAll(".emoji-category-tab").forEach(t => {
 						t.style.background = "transparent";
 					});
-					
+
 					// Select this tab
 					tab.style.background = "#e3f2fd";
-					
+
 					// Clear and populate emoji content
 					emojiContent.innerHTML = "";
-					
+
 					// Add emojis for this category
 					emojiCategories[category].forEach(emoji => {
 						const emojiButton = document.createElement("button");
@@ -244,34 +245,34 @@
 							emojiButton.style.backgroundColor = "transparent";
 							emojiButton.style.transform = "scale(1)";
 						};
-						
+
 						emojiContent.appendChild(emojiButton);
 					});
 				});
-				
+
 				tabsContainer.appendChild(tab);
 			});
-	
+
 			// Add tabs and content to picker
 			picker.appendChild(tabsContainer);
 			picker.appendChild(emojiContent);
-			
+
 			// Initialize with the first category
 			setTimeout(() => {
 				const firstTab = picker.querySelector(".emoji-category-tab");
 				if (firstTab) firstTab.click();
 			}, 0);
-	
+
 			document.addEventListener("click", (e) => {
 				if (picker.style.display === "flex" && !picker.contains(e.target) && e.target.id !== "emoji-button") {
 					picker.style.display = "none";
 				}
 			});
-	
+
 			picker.style.display = "none";
 			return picker;
 		};
-	
+
 		const createTextInputPopup = () => {
 			const popup = document.createElement("div");
 			popup.id = "custom-text-reaction-popup";
@@ -292,19 +293,19 @@
 				font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
 				animation: fadeIn 0.2s ease-out;
 			`;
-			
+
 			const title = document.createElement("div");
 			title.textContent = "Tùy chỉnh reaction";
 			title.style.cssText = "font-weight: bold; font-size: 16px; color: #333; margin-bottom: 5px;";
-			
+
 			const inputContainer = document.createElement("div");
 			inputContainer.style.cssText = "position: relative;";
-			
+
 			const input = document.createElement("input");
 			input.type = "text";
 			input.id = "custom-text-reaction-input";
 			input.placeholder = "Nhập nội dung reaction...";
-			input.maxLength = 20; 
+			input.maxLength = 15;
 			input.style.cssText = `
 				padding: 10px 12px;
 				padding-right: 40px;
@@ -322,7 +323,7 @@
 			input.addEventListener("blur", () => {
 				input.style.borderColor = "#e0e0e0";
 			});
-			
+
 			// Emoji button
 			const emojiButton = document.createElement("button");
 			emojiButton.id = "emoji-button";
@@ -348,10 +349,10 @@
 				emojiButton.style.opacity = "0.7";
 				emojiButton.style.transform = "translateY(-50%) scale(1)";
 			};
-	
+
 			// Create emoji picker
 			const emojiPicker = createEmojiPicker();
-			
+
 			// Toggle emoji picker
 			emojiButton.addEventListener("click", (e) => {
 				e.preventDefault();
@@ -362,33 +363,33 @@
 					emojiPicker.style.display = "none";
 				}
 			});
-			
+
 			// Add emoji to input when clicked
 			emojiPicker.addEventListener("click", (e) => {
 				if (e.target.classList.contains("emoji-button")) {
 					input.value += e.target.textContent;
-					charCounter.textContent = `${input.value.length}/20`;
+					charCounter.textContent = `${input.value.length}/15`;
 					emojiPicker.style.display = "none";
 					input.focus();
 				}
 			});
-			
+
 			const charCounter = document.createElement("div");
 			charCounter.style.cssText = "position: absolute; right: 10px; bottom: -18px; font-size: 11px; color: #999;";
-			charCounter.textContent = "0/20";
-			
+			charCounter.textContent = "0/15";
+
 			input.addEventListener("input", () => {
-				charCounter.textContent = `${input.value.length}/20`;
+				charCounter.textContent = `${input.value.length}/15`;
 			});
-			
+
 			inputContainer.appendChild(input);
 			inputContainer.appendChild(emojiButton);
 			inputContainer.appendChild(charCounter);
 			inputContainer.appendChild(emojiPicker);
-			
+
 			const buttonContainer = document.createElement("div");
 			buttonContainer.style.cssText = "display: flex; justify-content: flex-end; gap: 12px; margin-top: 10px;";
-			
+
 			const cancelButton = document.createElement("button");
 			cancelButton.textContent = "Hủy";
 			cancelButton.style.cssText = `
@@ -410,7 +411,7 @@
 			cancelButton.onclick = () => {
 				hidePopup();
 			};
-			
+
 			const confirmButton = document.createElement("button");
 			confirmButton.textContent = "Gửi";
 			confirmButton.style.cssText = `
@@ -429,22 +430,22 @@
 			confirmButton.onmouseout = () => {
 				confirmButton.style.backgroundColor = "#2196F3";
 			};
-			
+
 			buttonContainer.appendChild(cancelButton);
 			buttonContainer.appendChild(confirmButton);
-	
-			
+
+
 			// key down event enter for input
 			input.addEventListener("keydown", (e) => {
 				if (e.key === "Enter") {
 					confirmButton.click()
 				}
 			});
-			
+
 			popup.appendChild(title);
 			popup.appendChild(inputContainer);
 			popup.appendChild(buttonContainer);
-			
+
 			// Add overlay
 			const overlay = document.createElement("div");
 			overlay.id = "custom-reaction-overlay";
@@ -464,32 +465,32 @@
 					hidePopup();
 				}
 			});
-			
+
 			const hidePopup = () => {
 				popup.style.display = "none";
 				overlay.style.display = "none";
 				emojiPicker.style.display = "none";
 			};
-			
+
 			document.body.appendChild(popup);
 			document.body.appendChild(overlay);
-			
+
 			return {
-				popup, 
-				input, 
-				confirmButton, 
+				popup,
+				input,
+				confirmButton,
 				show: () => {
 					popup.style.display = "flex";
 					overlay.style.display = "block";
 					input.value = "";
-					charCounter.textContent = "0/20";
+					charCounter.textContent = "0/15";
 					input.focus();
 				},
 				hide: hidePopup,
 				overlay
 			};
 		};
-	
+
 		const enhanceReactionPanel = () => {
 			const style = document.createElement("style");
 			style.textContent = `
@@ -501,7 +502,7 @@
 					background-color: white !important;
 					box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
 				}
-				
+
 				.reaction-emoji-icon {
 					display: flex !important;
 					align-items: center !important;
@@ -512,28 +513,28 @@
 					background-color: rgba(240, 240, 240, 0.5) !important;
 					transition: transform 0.2s, background-color 0.2s !important;
 				}
-				
+
 				.reaction-emoji-text {
 					white-space: nowrap !important;
 					overflow: hidden !important;
 					text-overflow: ellipsis !important;
 					max-width: 3ch !important;
 				}
-		
+
 				.reaction-emoji-icon:hover {
 					transform: scale(1.1) !important;
 					background-color: #e3f2fd !important;
 				}
-				
+
 				.emoji-list-wrapper {
 					padding: 0.07rem !important;
 				}
-				
+
 				@keyframes fadeIn {
 					from { opacity: 0; }
 					to { opacity: 1; }
 				}
-				
+
 				@keyframes popIn {
 					0% { transform: scale(0.8); opacity: 0; }
 					70% { transform: scale(1.05); opacity: 1; }
@@ -542,7 +543,7 @@
 			`;
 			document.head.appendChild(style);
 		};
-	
+
 		const observer = new MutationObserver(mutations => mutations.forEach(m => {
 			if (m.type === "childList" && m.addedNodes.length > 0 && Array.from(m.addedNodes).some(n => n.querySelector?.(".reaction-emoji-list"))) {
 				setTimeout(() => {
@@ -553,9 +554,9 @@
 							if (wrapper) {
 								const btn = wrapper.querySelector('[id^="reaction-btn-"]');
 								const id = btn?.id.replace("reaction-btn-", "");
-								
+
 								list.style.animation = "popIn 0.3s ease-out forwards";
-								
+
 								reactions.forEach((react, idx) => {
 									const div = document.createElement("div");
 									const divEmoji = document.createElement("span");
@@ -563,10 +564,10 @@
 									if (react.icon.length > 2) {
 										div.className += " reaction-emoji-text";
 									}
-	
+
 									div.setAttribute("data-custom", "true");
 									div.style.animationDelay = `${50 * (idx + 7)}ms`;
-									
+
 									if (react.name === "send_custom") {
 										divEmoji.innerText = react.icon;
 										div.title = "Gửi reaction tùy chỉnh";
@@ -576,22 +577,22 @@
 										}
 										divEmoji.innerText = react.icon;
 									}
-									
+
 									div.appendChild(divEmoji);
 									list.appendChild(div);
 									div.addEventListener("click", e => {
 										e.preventDefault();
 										e.stopPropagation();
-										
+
 										if (react.name === "send_custom") {
 											if (!window.textInputPopup) {
 												window.textInputPopup = createTextInputPopup();
 											}
-											
+
 											window.textInputPopup.show();
-											
+
 											window.currentReactionContext = { wrapper, id };
-											
+
 											window.textInputPopup.confirmButton.onclick = () => {
 												const customText = window.textInputPopup.input.value.trim();
 												if (customText) {
@@ -605,10 +606,10 @@
 													window.textInputPopup.hide();
 												}
 											};
-											
+
 											return;
 										}
-										
+
 										sendReaction(wrapper, id, react);
 									});
 								});
@@ -618,13 +619,13 @@
 				}, 50);
 			}
 		}));
-		
+
 		function sendReaction(wrapper, id, react) {
-			const getReactFiber = el => { 
-				for (const k in el) if (k.startsWith("__react")) return el[k]; 
-				return null 
+			const getReactFiber = el => {
+				for (const k in el) if (k.startsWith("__react")) return el[k];
+				return null
 			};
-			
+
 			let fiber = getReactFiber(wrapper);
 			if (fiber) {
 				while (fiber) {
@@ -636,7 +637,7 @@
 					fiber = fiber.return;
 				}
 			}
-			
+
 			if (window.S?.default?.reactionMsgInfo) {
 				const msg = wrapper.closest(".msg-item");
 				const msgFiber = msg && getReactFiber(msg);
@@ -646,12 +647,12 @@
 				wrapper.classList.remove("show-elist");
 			}
 		}
-	
+
 		function updateBtn(id, react) {
 			const span = document.querySelector(`#reaction-btn-${id} span`);
 			if (span) {
 				span.innerHTML = "";
-				
+
 				if (react.name === "text" || typeof react.icon === "string" && react.icon.length > 2) {
 					const textContainer = document.createElement("div");
 					textContainer.className = "text-reaction";
@@ -670,7 +671,7 @@
 				}
 			}
 		}
-	
+
 		function initReactions() {
 			if (window.S?.default) {
 				if (!window.S.default.reactionMsgInfo.some(r => r.rType >= 100)) {
@@ -678,26 +679,26 @@
 				}
 			} else setTimeout(initReactions, 1000);
 		}
-	
+
 		const style = document.createElement("style");
 		style.textContent = `
 			[data-custom="true"] { position: relative; }
-			[data-custom="true"]::after { 
-				content: ''; 
-				position: absolute; 
-				bottom: -2px; 
-				right: -2px; 
-				width: 6px; 
-				height: 6px; 
-				background: #2196F3; 
-				border-radius: 50%; 
+			[data-custom="true"]::after {
+				content: '';
+				position: absolute;
+				bottom: -2px;
+				right: -2px;
+				width: 6px;
+				height: 6px;
+				background: #2196F3;
+				border-radius: 50%;
 			}
-			.msg-reaction-icon span { 
-				display: flex; 
-				align-items: center; 
-				justify-content: center; 
+			.msg-reaction-icon span {
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
-			
+
 			/* Text reaction styles */
 			.text-reaction {
 				background-color: #e3f2fd;
@@ -712,12 +713,12 @@
 				white-space: nowrap;
 				box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 			}
-			
+
 			/* Hover tooltips */
 			[data-custom="true"] {
 				position: relative;
 			}
-			
+
 			[data-custom="true"]:hover::before {
 				content: attr(title);
 				position: absolute;
@@ -737,7 +738,7 @@
 			}
 		`;
 		document.head.appendChild(style);
-	
+
 		const init = () => {
 			observer.observe(document.body, {childList: true, subtree: true});
 			initReactions();
@@ -746,4 +747,4 @@
 		};
 		"loading" === document.readyState ? document.addEventListener("DOMContentLoaded", init) : init();
 	})();
-	
+
