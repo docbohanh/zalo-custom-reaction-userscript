@@ -3,12 +3,12 @@
 // @version      1.8
 // @description  Zalo web custom reaction
 // @author       Anhwaivo
-// @maintainer   Kennex666 (UI/UX), Meohunter (TextBox), dacsang97 (Emoji Picker)
 // @match        https://*.zalo.me/*
 // @match        https://chat.zalo.me/*
 // @grant        none
 // @run-at       document-idle
 // @downloadURL  https://github.com/docbohanh/zalo-custom-reaction-userscript/raw/refs/heads/main/zalorcustomemoji.user.js
+// @updateURL  https://github.com/docbohanh/zalo-custom-reaction-userscript/raw/refs/heads/main/zalorcustomemoji.user.js
 // ==/UserScript==
 
 (function() {
