@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Zalo Custom Reactions
-// @version      1.8
+// @version      1.8.1
 // @description  Zalo web custom reaction
 // @author       Anhwaivo
 // @match        https://*.zalo.me/*
